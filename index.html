@@ -284,33 +284,33 @@
               <h2 class="text-xl font-serif font-bold text-gray-800 uppercase">Xác Nhận Tham Dự</h2>
               <p class="text-gray-500 mt-1 text-[11px]">Sự hiện diện của quý vị là niềm vinh hạnh của gia đình chúng tôi</p>
             </div>
-            <form onsubmit="handleFormSubmit(event)" class="space-y-4">
+            <form id="rsvpForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
               <div>
                 <label class="block text-gray-600 text-[10px] font-bold mb-1 uppercase">Tên khách mời</label>
-                <input type="text" required class="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded focus:border-gold-400 focus:outline-none focus:ring-1 focus:ring-gold-200 transition" placeholder="Nhập tên của bạn">
+                <input id="guestName" name="name" type="text" required class="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded focus:border-gold-400 focus:outline-none focus:ring-1 focus:ring-gold-200 transition" placeholder="Nhập tên của bạn">
               </div>
               <div>
                 <label class="block text-gray-600 text-[10px] font-bold mb-1 uppercase">Số điện thoại</label>
-                <input type="tel" required class="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded focus:border-gold-400 focus:outline-none focus:ring-1 focus:ring-gold-200 transition" placeholder="Số điện thoại">
+                <input id="guestPhone" name="phone" type="tel" required class="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded focus:border-gold-400 focus:outline-none focus:ring-1 focus:ring-gold-200 transition" placeholder="Số điện thoại">
               </div>
               <div>
                 <label class="block text-gray-600 text-[10px] font-bold mb-1 uppercase">Bạn sẽ tham dự chứ?</label>
                 <div class="flex flex-col gap-2">
                   <label class="flex items-center space-x-2 cursor-pointer bg-gray-50 p-2 rounded border border-gray-100">
-                    <input type="radio" name="attend" value="yes" class="text-gold-500 focus:ring-gold-500 w-4 h-4" checked>
+                    <input type="radio" name="attend" value="Có tham dự" class="text-gold-500 focus:ring-gold-500 w-4 h-4" checked>
                     <span class="text-sm">Có, tôi sẽ đến chung vui</span>
                   </label>
                   <label class="flex items-center space-x-2 cursor-pointer bg-gray-50 p-2 rounded border border-gray-100">
-                    <input type="radio" name="attend" value="no" class="text-gold-500 focus:ring-gold-500 w-4 h-4">
+                    <input type="radio" name="attend" value="Không tham dự" class="text-gold-500 focus:ring-gold-500 w-4 h-4">
                     <span class="text-sm">Rất tiếc, tôi bận</span>
                   </label>
                 </div>
               </div>
               <div>
                 <label class="block text-gray-600 text-[10px] font-bold mb-1 uppercase">Lời nhắn gửi</label>
-                <textarea class="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded focus:border-gold-400 focus:outline-none focus:ring-1 focus:ring-gold-200 transition h-16" placeholder="Gửi lời chúc..."></textarea>
+                <textarea id="guestMessage" name="message" class="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded focus:border-gold-400 focus:outline-none focus:ring-1 focus:ring-gold-200 transition h-16" placeholder="Gửi lời chúc..."></textarea>
               </div>
-              <button type="submit" class="w-full py-3 bg-gold-gradient text-white text-sm font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300 rounded">
+              <button id="submitBtn" type="submit" class="w-full py-3 bg-gold-gradient text-white text-sm font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300 rounded">
                 Gửi Lời Chúc
               </button>
             </form>
@@ -403,12 +403,69 @@
       }, 300);
     }
 
-    function handleFormSubmit(event) {
+    const GOOGLE_SCRIPT_URL = https://script.google.com/macros/s/AKfycbziLWevW4Ls3A878JBT3psmtOl6IbU_hBOisar_OyOpIBFa_6N0di9r36VbeWklDl8Y/exec;
+
+    async function handleFormSubmit(event) {
       event.preventDefault();
-      const modal = document.getElementById('successModal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      event.target.reset();
+
+      const form = document.getElementById('rsvpForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const guestName = document.getElementById('guestName').value.trim();
+      const guestPhone = document.getElementById('guestPhone').value.trim();
+      const guestMessage = document.getElementById('guestMessage').value.trim();
+      const attend = document.querySelector('input[name="attend"]:checked')?.value || '';
+
+      if (!guestName || !guestPhone) {
+        alert('Vui lòng nhập đầy đủ tên và số điện thoại.');
+        return;
+      }
+
+      if (GOOGLE_SCRIPT_URL === 'DAN_WEB_APP_URL_VAO_DAY') {
+        alert('Bạn chưa dán Web App URL của Google Apps Script vào code.');
+        return;
+      }
+
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Đang gửi...';
+
+      try {
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+          },
+          body: JSON.stringify({
+            name: guestName,
+            phone: guestPhone,
+            attend,
+            message: guestMessage,
+            userAgent: navigator.userAgent
+          })
+        });
+
+        const resultText = await response.text();
+        let result = {};
+        try {
+          result = JSON.parse(resultText);
+        } catch (e) {
+          result = { result: 'unknown', raw: resultText };
+        }
+
+        if (result.result !== 'success') {
+          throw new Error(result.message || 'Không thể gửi dữ liệu.');
+        }
+
+        const modal = document.getElementById('successModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        form.reset();
+      } catch (error) {
+        alert('Gửi form thất bại: ' + error.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
     }
 
     function closeModal() {
