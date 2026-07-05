@@ -429,31 +429,48 @@
       submitBtn.disabled = true;
       submitBtn.innerHTML = 'Đang gửi...';
 
-      try {
-        const response = await fetch(GOOGLE_SCRIPT_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'text/plain;charset=utf-8'
-          },
-          body: JSON.stringify({
-            name: guestName,
-            phone: guestPhone,
-            attend,
-            message: guestMessage,
-            userAgent: navigator.userAgent
-          })
-        });
+      const payload = {
+        name: guestName,
+        phone: guestPhone,
+        attend,
+        message: guestMessage,
+        userAgent: navigator.userAgent
+      };
 
-        const resultText = await response.text();
-        let result = {};
+      try {
+        let response;
         try {
-          result = JSON.parse(resultText);
-        } catch (e) {
-          result = { result: 'unknown', raw: resultText };
+          response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify(payload),
+            mode: 'cors',
+            redirect: 'follow'
+          });
+        } catch (firstError) {
+          response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            },
+            body: new URLSearchParams(payload).toString(),
+            mode: 'cors',
+            redirect: 'follow'
+          });
         }
 
-        if (result.result !== 'success') {
-          throw new Error(result.message || 'Không thể gửi dữ liệu.');
+        let resultText = '';
+        try {
+          resultText = await response.text();
+        } catch (e) {
+          resultText = '';
+        }
+
+        const ok = response.ok || /success|ok|saved/i.test(resultText);
+        if (!ok) {
+          throw new Error(resultText || ('HTTP ' + response.status));
         }
 
         const modal = document.getElementById('successModal');
