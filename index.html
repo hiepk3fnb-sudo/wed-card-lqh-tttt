@@ -4,16 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thiệp Cưới: Quang Hiệp & Thu Thắm</title>
+
   <meta property="og:title" content="Thiệp Cưới: Quang Hiệp & Thu Thắm">
   <meta property="og:description" content="Trân trọng kính mời quý khách đến dự buổi tiệc thân mật mừng lễ thành hôn của chúng tôi.">
   <meta property="og:image" content="https://i.postimg.cc/ZKNMyTjm/18-03-2026-LQH-AHRI-BARBIE-(2).jpg">
   <meta property="og:type" content="website">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
   <script>
     tailwind.config = {
       theme: {
@@ -44,6 +47,7 @@
       }
     };
   </script>
+
   <style>
     html { scroll-behavior: smooth; }
     body {
@@ -51,44 +55,31 @@
       background-image: radial-gradient(#4a5568 1px, transparent 1px);
       background-size: 20px 20px;
     }
+    .text-gradient {
+      background: linear-gradient(to right, #B88E18, #EBD48F, #947012);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
     .bg-gold-gradient {
       background: linear-gradient(135deg, #B88E18 0%, #D4A828 50%, #947012 100%);
     }
     .glass-effect {
-      background: rgba(255,255,255,.95);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(8px);
     }
     #scroll-container { scroll-behavior: smooth; }
     #scroll-container::-webkit-scrollbar { width: 6px; }
     #scroll-container::-webkit-scrollbar-track { background: #FBF8F1; }
     #scroll-container::-webkit-scrollbar-thumb { background: #EBD48F; border-radius: 4px; }
+    #scroll-container::-webkit-scrollbar-thumb:hover { background: #B88E18; }
     .fade-up {
       opacity: 0;
       transform: translateY(30px);
-      transition: opacity .8s ease-out, transform .8s ease-out;
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
     }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-    .anti-copy, .anti-copy * {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-touch-callout: none;
-    }
-    .guest-watermark::after {
-      content: attr(data-guest);
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 34px;
-      font-weight: 700;
-      color: rgba(184,142,24,.07);
-      transform: rotate(-18deg);
-      pointer-events: none;
-      letter-spacing: 2px;
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
@@ -97,20 +88,6 @@
     <source src="https://double-green-dlpqhbxggy.edgeone.app/You%20Are%20The%20Reason%20-%20Calum%20Scott.mp3" type="audio/mpeg">
   </audio>
 
-  <div id="guestEntryOverlay" class="fixed inset-0 z-[200] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden">
-      <div class="bg-gold-gradient px-6 py-5 text-white text-center">
-        <p class="uppercase tracking-[0.25em] text-xs mb-2">Thiệp cưới online</p>
-        <h2 class="font-script text-4xl leading-tight">Hiệp & Thắm</h2>
-      </div>
-      <div class="p-6">
-        <p class="text-sm text-gray-600 text-center mb-4">Nhập tên khách mời để mở thiệp hoặc dùng đường link riêng có sẵn tên khách.</p>
-        <input id="guestInput" type="text" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gold-300 focus:border-gold-400" placeholder="Ví dụ: Nguyễn Văn A">
-        <button id="openInviteBtn" class="w-full mt-4 py-3 bg-gold-gradient text-white rounded-xl font-bold uppercase tracking-widest text-sm shadow-lg">Mở thiệp cưới</button>
-      </div>
-    </div>
-  </div>
-
   <div id="mobile-frame" class="relative w-full max-w-[450px] h-[100dvh] md:h-[910px] bg-gold-50 md:rounded-[2.5rem] md:border-[8px] md:border-gray-900 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col">
     <div class="absolute bottom-6 left-4 z-50">
       <button id="musicBtn" class="w-10 h-10 rounded-full bg-white border-2 border-gold-400 text-gold-500 shadow-lg flex items-center justify-center hover:scale-110 transition duration-300">
@@ -118,11 +95,15 @@
       </button>
     </div>
 
-    <div id="scroll-container" class="anti-copy flex-1 overflow-y-auto overflow-x-hidden relative bg-gold-50 w-full h-full guest-watermark" data-guest="">
+    <div id="scroll-container" class="flex-1 overflow-y-auto overflow-x-hidden relative bg-gold-50 w-full h-full">
       <nav class="sticky top-0 w-full z-40 glass-effect border-b border-gold-100 shadow-sm transition-all duration-300">
         <div class="px-5 py-4 flex justify-between items-center">
-          <a href="#" class="text-xl font-script text-gold-600 tracking-wide origin-left">Hiệp <span class="text-[10px] font-sans text-gray-400 mx-0.5">&</span> Thắm</a>
-          <a href="#rsvp" class="inline-block px-4 py-1.5 rounded-full bg-gold-gradient text-white text-[11px] font-bold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition duration-300 uppercase tracking-wider">Tham Dự</a>
+          <a href="#" class="text-xl font-script text-gold-600 tracking-wide origin-left">
+            Hiệp <span class="text-[10px] font-sans text-gray-400 mx-0.5">&</span> Thắm
+          </a>
+          <a href="#rsvp" class="inline-block px-4 py-1.5 rounded-full bg-gold-gradient text-white text-[11px] font-bold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition duration-300 uppercase tracking-wider">
+            Tham Dự
+          </a>
         </div>
       </nav>
 
@@ -139,16 +120,18 @@
               <i class="fas fa-heart text-gold-500 text-lg animate-pulse"></i>
             </div>
           </div>
-          <p id="guestGreeting" class="text-[11px] uppercase tracking-[0.25em] text-gold-500 mb-2">Trân trọng kính mời</p>
-          <h2 id="guestNameDisplay" class="text-xl font-serif text-gray-800 mb-3">Quý khách</h2>
-          <h1 class="text-4xl font-script text-gray-800 mb-2 mt-2 leading-tight">Quang Hiệp <br><span class="text-gold-400 text-3xl">&</span><br> Thu Thắm</h1>
+          <h1 class="text-4xl font-script text-gray-800 mb-2 mt-6 leading-tight">
+            Quang Hiệp <br><span class="text-gold-400 text-3xl">&</span><br> Thu Thắm
+          </h1>
           <div class="flex items-center gap-3 text-gold-600 font-serif italic text-base my-3">
             <span class="h-[1px] w-8 bg-gold-300"></span>
             <span>01.01.2027</span>
             <span class="h-[1px] w-8 bg-gold-300"></span>
           </div>
           <p class="text-gray-500 text-[10px] uppercase tracking-wider mb-8">(24 tháng 11 năm Bính Ngọ)</p>
-          <a href="#events" class="animate-bounce text-gold-500 text-xl"><i class="fas fa-chevron-down"></i></a>
+          <a href="#events" class="animate-bounce text-gold-500 text-xl">
+            <i class="fas fa-chevron-down"></i>
+          </a>
         </div>
       </header>
 
@@ -156,19 +139,26 @@
         <div class="px-6 text-center">
           <i class="fas fa-quote-left text-2xl text-gold-200 mb-4 inline-block"></i>
           <h2 class="text-xl font-serif font-bold text-gray-800 mb-4 uppercase tracking-wide">TRÂN TRỌNG KÍNH MỜI</h2>
-          <p class="text-gray-600 leading-relaxed text-sm">Với tất cả sự trân trọng và niềm hạnh phúc, chúng tôi xin trân trọng kính mời Quý khách đến dự buổi tiệc thân mật mừng lễ thành hôn của chúng tôi.</p>
+          <p class="text-gray-600 leading-relaxed text-sm">
+            Với tất cả sự trân trọng và niềm hạnh phúc, chúng tôi xin trân trọng kính mời Quý khách đến dự buổi tiệc thân mật mừng lễ thành hôn của chúng tôi.
+          </p>
           <i class="fas fa-quote-right text-2xl text-gold-200 inline-block mt-4"></i>
         </div>
       </section>
 
       <section id="couple" class="py-12 bg-gold-50 fade-up">
         <div class="px-5">
-          <p class="text-center text-gray-600 text-sm leading-relaxed italic font-serif mb-8 px-4">“Hôn nhân là chuyện cả đời,<br>Yêu người vừa ý, cưới người mình thương...”</p>
+          <p class="text-center text-gray-600 text-sm leading-relaxed italic font-serif mb-8 px-4">
+            “Hôn nhân là chuyện cả đời,<br>
+            Yêu người vừa ý, cưới người mình thương...”
+          </p>
           <div class="flex flex-col gap-10 items-center">
             <div class="text-center w-full">
               <div class="relative w-36 h-36 mx-auto mb-4">
                 <img src="https://i.postimg.cc/wj1vFb3R/ZL-07-08-03-2026-(86).jpg" loading="lazy" alt="Groom" class="w-full h-full object-cover rounded-full border-4 border-white shadow-xl">
-                <div class="absolute bottom-1 right-1 w-8 h-8 bg-gold-500 rounded-full flex items-center justify-center text-white border-2 border-white"><i class="fas fa-male text-sm"></i></div>
+                <div class="absolute bottom-1 right-1 w-8 h-8 bg-gold-500 rounded-full flex items-center justify-center text-white border-2 border-white">
+                  <i class="fas fa-male text-sm"></i>
+                </div>
               </div>
               <h3 class="text-2xl font-script text-gray-800 mb-1">Lê Quang Hiệp</h3>
               <p class="text-gold-600 font-bold uppercase text-[10px] tracking-widest mb-3">Chú Rể</p>
@@ -178,10 +168,13 @@
                 <p class="italic mt-1 text-gray-500 text-[10px]">P. Cam Ly, TP. Đà Lạt</p>
               </div>
             </div>
+
             <div class="text-center w-full">
               <div class="relative w-36 h-36 mx-auto mb-4">
                 <img src="https://i.postimg.cc/fbhNXH9F/IMG-0418.jpg" loading="lazy" alt="Bride" class="w-full h-full object-cover rounded-full border-4 border-white shadow-xl">
-                <div class="absolute bottom-1 left-1 w-8 h-8 bg-gold-500 rounded-full flex items-center justify-center text-white border-2 border-white"><i class="fas fa-female text-sm"></i></div>
+                <div class="absolute bottom-1 left-1 w-8 h-8 bg-gold-500 rounded-full flex items-center justify-center text-white border-2 border-white">
+                  <i class="fas fa-female text-sm"></i>
+                </div>
               </div>
               <h3 class="text-2xl font-script text-gray-800 mb-1">Thạch Thị Thu Thắm</h3>
               <p class="text-gold-600 font-bold uppercase text-[10px] tracking-widest mb-3">Cô Dâu</p>
@@ -227,6 +220,7 @@
               </div>
               <a href="https://maps.app.goo.gl/WhwnNJgT8JnN3Ec89" target="_blank" rel="noopener noreferrer" class="inline-block w-full py-2 border border-gold-400 text-gold-600 rounded-full hover:bg-gold-500 hover:text-white transition duration-300 text-[11px] font-semibold uppercase">Xem bản đồ</a>
             </div>
+
             <div class="bg-white p-6 rounded-2xl shadow-md border border-gold-100 text-center">
               <div class="inline-block p-3 rounded-full bg-gold-50 mb-4 text-gold-500"><i class="fas fa-utensils text-2xl"></i></div>
               <h3 class="text-lg font-serif font-bold text-gray-800 mb-1 uppercase">Tiệc Rượu</h3>
@@ -316,7 +310,9 @@
                 <label class="block text-gray-600 text-[10px] font-bold mb-1 uppercase">Lời nhắn gửi</label>
                 <textarea id="guestMessage" name="message" class="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded focus:border-gold-400 focus:outline-none focus:ring-1 focus:ring-gold-200 transition h-16" placeholder="Gửi lời chúc..."></textarea>
               </div>
-              <button id="submitBtn" type="submit" class="w-full py-3 bg-gold-gradient text-white text-sm font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300 rounded">Gửi Lời Chúc</button>
+              <button id="submitBtn" type="submit" class="w-full py-3 bg-gold-gradient text-white text-sm font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300 rounded">
+                Gửi Lời Chúc
+              </button>
             </form>
           </div>
         </div>
@@ -349,7 +345,9 @@
 
     <div id="successModal" class="absolute inset-0 z-[100] hidden items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity">
       <div class="bg-white p-6 rounded-xl shadow-2xl text-center w-10/12 max-w-sm mx-auto transform scale-100 transition-transform">
-        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3"><i class="fas fa-check text-2xl text-green-500"></i></div>
+        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+          <i class="fas fa-check text-2xl text-green-500"></i>
+        </div>
         <h3 class="text-xl font-serif font-bold text-gray-800 mb-2">Cảm ơn bạn!</h3>
         <p class="text-gray-600 text-sm mb-5">Lời chúc của bạn đã được gửi đến cô dâu và chú rể thành công.</p>
         <button onclick="closeModal()" class="w-full px-4 py-2 text-sm bg-gold-500 text-white rounded-full font-bold hover:bg-gold-600 transition shadow-md">Đóng</button>
@@ -370,8 +368,6 @@
         });
       }, { threshold: 0.1 });
       document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-      initGuestMode();
-      initAntiCopy();
     });
 
     const weddingDate = new Date('January 01, 2027 11:30:00').getTime();
@@ -407,87 +403,11 @@
       }, 300);
     }
 
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwUcO-u_2EG3Tk1a1XeHJ-VXHcMRYN1mSadOrCyw6eadF6sYa0BMnaFlmUSgKDiQTaP/exec';
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbziLWevW4Ls3A878JBT3psmtOl6IbU_hBOisar_OyOpIBFa_6N0di9r36VbeWklDl8Y/exec';
 
-    function setGuestName(name) {
-      const safeName = (name || '').trim();
-      const displayName = safeName || 'Quý khách';
-      document.getElementById('guestNameDisplay').textContent = displayName;
-      document.getElementById('guestInput').value = safeName;
-      document.getElementById('guestName').value = safeName;
-      document.getElementById('scroll-container').setAttribute('data-guest', displayName);
-      document.title = `Thiệp Cưới: Quang Hiệp & Thu Thắm - ${displayName}`;
-    }
-
-
-
-    function initAntiCopy() {
-      document.addEventListener('contextmenu', (e) => {
-        e.preventDefault();
-      });
-
-      document.addEventListener('dragstart', (e) => {
-        e.preventDefault();
-      });
-
-      document.addEventListener('selectstart', (e) => {
-        const allowed = e.target.closest('input, textarea');
-        if (!allowed) e.preventDefault();
-      });
-
-      document.addEventListener('copy', (e) => {
-        const allowed = e.target.closest('input, textarea');
-        if (!allowed) {
-          e.preventDefault();
-          alert('Nội dung trên thiệp cưới đang được hạn chế sao chép.');
-        }
-      });
-
-      document.addEventListener('cut', (e) => {
-        const allowed = e.target.closest('input, textarea');
-        if (!allowed) e.preventDefault();
-      });
-
-      document.addEventListener('keydown', (e) => {
-        const key = e.key.toLowerCase();
-        const blocked =
-          key === 'f12' ||
-          ((e.ctrlKey || e.metaKey) && ['u', 's', 'c', 'x', 'a', 'p'].includes(key)) ||
-          ((e.ctrlKey || e.metaKey) && e.shiftKey && ['i', 'j', 'c'].includes(key));
-
-        const inField = e.target.closest('input, textarea');
-        if (blocked && !inField) {
-          e.preventDefault();
-          alert('Tính năng này đã bị tắt trên thiệp cưới.');
-        }
-      });
-    }
-
-    function initGuestMode() {
-      const params = new URLSearchParams(window.location.search);
-      const guest = params.get('guest');
-      const overlay = document.getElementById('guestEntryOverlay');
-      if (guest && guest.trim()) {
-        setGuestName(guest);
-        overlay.classList.add('hidden');
-      }
-    }
-
-    document.getElementById('openInviteBtn').addEventListener('click', () => {
-      const inputName = document.getElementById('guestInput').value.trim();
-      if (!inputName) {
-        alert('Vui lòng nhập tên khách mời.');
-        return;
-      }
-      const url = new URL(window.location.href);
-      url.searchParams.set('guest', inputName);
-      window.history.replaceState({}, '', url.toString());
-      setGuestName(inputName);
-      document.getElementById('guestEntryOverlay').classList.add('hidden');
-    });
-
-    function handleFormSubmit(event) {
+    async function handleFormSubmit(event) {
       event.preventDefault();
+
       const form = document.getElementById('rsvpForm');
       const submitBtn = document.getElementById('submitBtn');
       const guestName = document.getElementById('guestName').value.trim();
@@ -500,59 +420,69 @@
         return;
       }
 
+      if (GOOGLE_SCRIPT_URL === 'DAN_WEB_APP_URL_VAO_DAY') {
+        alert('Bạn chưa dán Web App URL của Google Apps Script vào code.');
+        return;
+      }
+
       const originalText = submitBtn.innerHTML;
       submitBtn.disabled = true;
       submitBtn.innerHTML = 'Đang gửi...';
 
-      const payload = new URLSearchParams({
+      const payload = {
         name: guestName,
         phone: guestPhone,
         attend,
         message: guestMessage,
-        userAgent: navigator.userAgent,
-        guestLink: window.location.href
-      });
+        userAgent: navigator.userAgent
+      };
 
-      let iframe = document.getElementById('hidden-submit-frame');
-      if (!iframe) {
-        iframe = document.createElement('iframe');
-        iframe.name = 'hidden-submit-frame';
-        iframe.id = 'hidden-submit-frame';
-        iframe.style.display = 'none';
-        document.body.appendChild(iframe);
-      }
+      try {
+        let response;
+        try {
+          response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify(payload),
+            mode: 'cors',
+            redirect: 'follow'
+          });
+        } catch (firstError) {
+          response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            },
+            body: new URLSearchParams(payload).toString(),
+            mode: 'cors',
+            redirect: 'follow'
+          });
+        }
 
-      const hiddenForm = document.createElement('form');
-      hiddenForm.method = 'POST';
-      hiddenForm.action = GOOGLE_SCRIPT_URL;
-      hiddenForm.target = 'hidden-submit-frame';
-      hiddenForm.style.display = 'none';
+        let resultText = '';
+        try {
+          resultText = await response.text();
+        } catch (e) {
+          resultText = '';
+        }
 
-      for (const [key, value] of payload.entries()) {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = value;
-        hiddenForm.appendChild(input);
-      }
+        const ok = response.ok || /success|ok|saved/i.test(resultText);
+        if (!ok) {
+          throw new Error(resultText || ('HTTP ' + response.status));
+        }
 
-      document.body.appendChild(hiddenForm);
-      let done = false;
-      const finish = () => {
-        if (done) return;
-        done = true;
         const modal = document.getElementById('successModal');
         modal.classList.remove('hidden');
         modal.classList.add('flex');
         form.reset();
-        setGuestName(new URLSearchParams(window.location.search).get('guest') || '');
+      } catch (error) {
+        alert('Gửi form thất bại: ' + error.message);
+      } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
-        setTimeout(() => hiddenForm.remove(), 0);
-      };
-      iframe.onload = () => finish();
-      setTimeout(() => finish(), 2500);
-      hiddenForm.submit();
+      }
     }
 
     function closeModal() {
@@ -588,6 +518,7 @@
     document.addEventListener('click', onFirstInteraction);
     document.addEventListener('touchstart', onFirstInteraction);
     scrollContainer.addEventListener('scroll', onFirstInteraction, { once: true });
+
     musicBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       if (isPlaying) {
